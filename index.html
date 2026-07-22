@@ -3,405 +3,128 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hook Lab — Stop the Scroll. Start the Growth.</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<title>Swastik Media | Skill-Based Income</title>
+
 <style>
-  :root{
-    --bg:#09090b;
-    --surface:#131316;
-    --surface-2:#1b1b20;
-    --line:#2a2a30;
-    --hot:#ff3b6b;
-    --cool:#5b8cff;
-    --gold:#f5c451;
-    --text:#ffffff;
-    --muted:#9a9aa5;
-    --muted-2:#6c6c74;
-    --display:'Archivo Black', sans-serif;
-    --body:'Inter', sans-serif;
-    --mono:'JetBrains Mono', monospace;
-  }
-  html{ scroll-behavior:smooth; }
-  body{ background:var(--bg); color:var(--text); font-family:var(--body); margin:0; line-height:1.55; }
-  *{ box-sizing:border-box; }
-  ::selection{ background:var(--hot); color:#fff; }
-  a{ color:inherit; }
-  img{ max-width:100%; }
-  .wrap{ max-width:1080px; margin:0 auto; padding:0 24px; }
+body{
+    background:#0e0e0e;
+    color:#fff;
+    font-family:Arial;
+}
 
-  /* ---------- BUTTONS ---------- */
-  .btn{
-    display:inline-flex; align-items:center; justify-content:center; gap:8px;
-    font-family:var(--body); font-weight:700; font-size:14.5px;
-    padding:14px 26px; border-radius:10px; border:none; cursor:pointer;
-    text-decoration:none; transition:transform .15s, box-shadow .15s;
-  }
-  .btn-primary{ background:var(--hot); color:#fff; box-shadow:0 8px 24px -8px rgba(255,59,107,0.6); }
-  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 12px 28px -8px rgba(255,59,107,0.75); }
-  .btn-ghost{ background:transparent; color:var(--text); border:1px solid var(--line); }
-  .btn-ghost:hover{ border-color:var(--muted); }
-  .btn-block{ width:100%; }
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:50px 20px;
+}
 
-  /* ---------- NAV ---------- */
-  nav{ position:sticky; top:0; z-index:50; background:rgba(9,9,11,0.85); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
-  nav .wrap{ display:flex; align-items:center; justify-content:space-between; height:64px; }
-  .logo{ font-family:var(--display); font-size:15px; letter-spacing:0.5px; }
-  .logo span{ color:var(--hot); }
-  .nav-cta{ font-size:13px; padding:10px 18px; }
+.hero{text-align:center;margin-bottom:60px;}
+.hero h1{font-size:2.6rem;}
+.hero p{color:#bfbfbf;margin-top:10px;}
 
-  /* ---------- HERO ---------- */
-  .hero{ padding:76px 0 60px; display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center; }
-  @media (max-width:860px){ .hero{ grid-template-columns:1fr; padding:48px 0 40px; } }
+.courses{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:30px;
+}
 
-  .badge-row{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
-  .badge{
-    font-family:var(--mono); font-size:11px; letter-spacing:0.5px; text-transform:uppercase;
-    color:var(--gold); background:rgba(245,196,81,0.08); border:1px solid rgba(245,196,81,0.3);
-    padding:5px 10px; border-radius:20px;
-  }
-  h1.headline{ font-family:var(--display); font-size:clamp(32px,5vw,52px); line-height:1.04; margin:0 0 20px; letter-spacing:-0.5px; }
-  h1.headline .accent{ color:var(--hot); }
-  .sub{ color:var(--muted); font-size:16.5px; max-width:480px; margin-bottom:30px; }
+.course-card{
+    background:#161616;
+    border-radius:16px;
+    padding:25px;
+}
 
-  .hero-cta{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-bottom:28px; }
-  .price-tag{ font-family:var(--mono); font-size:13px; color:var(--muted); }
-  .price-tag b{ color:var(--text); font-size:16px; }
-  .strike{ text-decoration:line-through; color:var(--muted-2); margin-right:6px; }
+.price{color:#00ff99;font-size:1.5rem;font-weight:bold;margin:10px 0;}
 
-  .stat-row{ display:flex; gap:30px; }
-  .stat b{ font-family:var(--mono); font-size:24px; display:block; }
-  .stat span{ font-size:11.5px; color:var(--muted-2); text-transform:uppercase; letter-spacing:1px; }
+.payment-box{
+    background:#0e0e0e;
+    border:1px solid #2a2a2a;
+    padding:15px;
+    border-radius:10px;
+}
 
-  /* Phone reel proof */
-  .phone{ width:100%; max-width:290px; margin:0 auto; aspect-ratio:9/17.5; background:linear-gradient(160deg,#18131c,#0c0c10 60%);
-    border:1px solid var(--line); border-radius:34px; position:relative; overflow:hidden;
-    box-shadow:0 40px 80px -30px rgba(255,59,107,0.25), 0 0 0 6px #000; }
-  .phone::before{ content:''; position:absolute; top:10px; left:50%; transform:translateX(-50%); width:70px; height:6px; background:#000; border-radius:6px; z-index:5; }
-  .reel-progress{ position:absolute; top:20px; left:14px; right:14px; height:2px; background:rgba(255,255,255,0.15); border-radius:2px; overflow:hidden; z-index:4; }
-  .reel-progress i{ display:block; height:100%; width:0%; background:var(--hot); animation:fillbar 3s linear infinite; }
-  @keyframes fillbar{ from{width:0%;} to{width:100%;} }
-  .reel-tag{ position:absolute; top:34px; left:14px; z-index:4; font-family:var(--mono); font-size:9px; letter-spacing:1px; text-transform:uppercase;
-    color:var(--gold); background:rgba(0,0,0,0.4); padding:4px 8px; border-radius:20px; border:1px solid rgba(245,196,81,0.35); }
-  .reel-body{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:60px 22px 90px; text-align:center; }
-  .reel-hook{ font-family:var(--display); font-size:18px; line-height:1.25; color:#fff; }
-  .reel-meta{ position:absolute; bottom:16px; left:14px; right:14px; z-index:4; display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:10px; color:var(--muted); }
-  .reel-meta .views{ color:var(--hot); }
+.btn{
+    display:block;
+    margin-top:15px;
+    padding:14px;
+    background:#00ff99;
+    color:#000;
+    text-align:center;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:bold;
+}
 
-  /* ---------- SECTION SHELL ---------- */
-  section{ padding:64px 0; border-top:1px solid var(--line); }
-  .sec-head{ text-align:center; max-width:600px; margin:0 auto 44px; }
-  .sec-eyebrow{ font-family:var(--mono); font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--cool); margin-bottom:10px; }
-  h2{ font-family:var(--display); font-size:clamp(24px,3.2vw,34px); margin:0 0 12px; letter-spacing:-0.3px; }
-  .sec-desc{ color:var(--muted); font-size:15px; }
-
-  /* ---------- PAIN POINTS ---------- */
-  .pain-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
-  @media (max-width:760px){ .pain-grid{ grid-template-columns:1fr; } }
-  .pain-card{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:22px; }
-  .pain-card .x{ color:var(--hot); font-family:var(--mono); font-size:13px; margin-bottom:10px; }
-  .pain-card p{ font-size:14px; color:var(--muted); margin:0; }
-
-  /* ---------- WHATS INSIDE ---------- */
-  .feature-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-  @media (max-width:860px){ .feature-grid{ grid-template-columns:1fr; } }
-  .feature-card{ background:linear-gradient(160deg, var(--surface-2), var(--surface)); border:1px solid var(--line); border-radius:16px; padding:28px; }
-  .feature-num{ font-family:var(--mono); font-size:12px; color:var(--gold); margin-bottom:14px; }
-  .feature-card h3{ font-family:var(--display); font-size:19px; margin:0 0 10px; }
-  .feature-card p{ font-size:14px; color:var(--muted); margin:0 0 14px; }
-  .feature-card ul{ margin:0; padding-left:18px; font-size:13px; color:var(--muted); }
-  .feature-card li{ margin-bottom:5px; }
-
-  /* ---------- TESTIMONIALS ---------- */
-  .test-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
-  @media (max-width:860px){ .test-grid{ grid-template-columns:1fr; } }
-  .test-card{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:22px; }
-  .stars{ color:var(--gold); font-size:13px; margin-bottom:12px; letter-spacing:2px; }
-  .test-quote{ font-size:14px; color:var(--text); margin-bottom:16px; }
-  .test-name{ font-family:var(--mono); font-size:12px; color:var(--muted-2); }
-
-  /* ---------- PRICING ---------- */
-  .price-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; max-width:760px; margin:0 auto; }
-  @media (max-width:700px){ .price-grid{ grid-template-columns:1fr; } }
-  .price-card{ background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:32px; position:relative; }
-  .price-card.featured{ border-color:var(--hot); background:linear-gradient(160deg, rgba(255,59,107,0.08), var(--surface)); }
-  .featured-tag{ position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--hot); color:#fff;
-    font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:1px; padding:5px 12px; border-radius:20px; }
-  .price-card h3{ font-family:var(--display); font-size:18px; margin:0 0 8px; }
-  .price-card .desc{ font-size:13px; color:var(--muted); margin-bottom:20px; }
-  .price-amount{ font-family:var(--mono); font-size:34px; margin-bottom:4px; }
-  .price-amount .strike{ font-size:16px; }
-  .price-note{ font-size:12px; color:var(--muted-2); margin-bottom:22px; }
-  .price-card ul{ margin:0 0 24px; padding-left:18px; font-size:13.5px; color:var(--muted); }
-  .price-card li{ margin-bottom:8px; }
-
-  /* ---------- GUARANTEE ---------- */
-  .guarantee{ display:flex; align-items:center; gap:20px; background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:26px 30px; max-width:700px; margin:0 auto; }
-  .guarantee .badge-circle{ font-family:var(--display); font-size:20px; color:var(--gold); border:2px solid var(--gold); border-radius:50%; width:64px; height:64px; display:flex; align-items:center; justify-content:center; flex-shrink:0; text-align:center; line-height:1.1; }
-  .guarantee p{ margin:0; font-size:14px; color:var(--muted); }
-  .guarantee strong{ color:var(--text); }
-
-  /* ---------- FAQ ---------- */
-  .faq{ max-width:700px; margin:0 auto; }
-  .faq-item{ border-bottom:1px solid var(--line); padding:18px 0; }
-  .faq-item summary{ cursor:pointer; font-weight:600; font-size:15px; list-style:none; display:flex; justify-content:space-between; align-items:center; }
-  .faq-item summary::-webkit-details-marker{ display:none; }
-  .faq-item summary::after{ content:'+'; font-family:var(--mono); color:var(--hot); font-size:18px; }
-  .faq-item[open] summary::after{ content:'–'; }
-  .faq-item p{ margin:12px 0 0; font-size:13.5px; color:var(--muted); }
-
-  /* ---------- FINAL CTA ---------- */
-  .final-cta{ text-align:center; background:linear-gradient(160deg, rgba(255,59,107,0.08), var(--bg)); }
-  .final-cta h2{ margin-bottom:16px; }
-
-  /* ---------- FOOTER ---------- */
-  footer{ border-top:1px solid var(--line); padding:34px 0; color:var(--muted-2); font-size:12.5px; }
-  footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+.hidden{display:none;}
 </style>
+
+<script>
+function paid(course){
+    let msg = encodeURIComponent(
+        "Hello Swastik Media 👋\n\nI have paid for " + course +
+        ".\nHere is my payment screenshot.\nPlease unlock my course."
+    );
+    window.open("https://wa.me/918600883608?text=" + msg, "_blank");
+
+    document.getElementById(course).classList.remove("hidden");
+}
+</script>
+
 </head>
 <body>
 
-<nav>
-  <div class="wrap">
-    <div class="logo">HOOK<span>LAB</span></div>
-    <a href="#pricing" class="btn btn-primary nav-cta">Get the Bundle</a>
-  </div>
-</nav>
+<div class="container">
 
-<div class="wrap">
-  <section class="hero" style="border-top:none;">
-    <div>
-      <div class="badge-row">
-        <div class="badge">100 Viral Hooks</div>
-        <div class="badge">35 Reel Ideas</div>
-        <div class="badge">6 Income Streams</div>
-      </div>
-      <h1 class="headline">Your Reels are dying in the <span class="accent">first 3 seconds.</span><br>Here's the fix.</h1>
-      <p class="sub">The complete hook-to-income system: every viral opening line, the Reel ideas to match, and the growth blueprint to turn views into revenue.</p>
+<section class="hero">
+    <h1>Turn Skills Into Monthly Income</h1>
+    <p>Pay once. Learn forever. Start earning.</p>
+</section>
 
-      <div class="hero-cta">
-        <a href="#pricing" class="btn btn-primary">Get Instant Access — ₹99</a>
-        <a href="#inside" class="btn btn-ghost">See what's inside</a>
-      </div>
+<section class="courses">
 
-      <div class="stat-row">
-        <div class="stat"><b>100</b><span>Hooks</span></div>
-        <div class="stat"><b>35</b><span>Reel Ideas</span></div>
-        <div class="stat"><b>60</b><span>Pages</span></div>
-      </div>
+<!-- SMMA -->
+<div class="course-card">
+    <h2>SMMA Mastery</h2>
+    <p>Learn client acquisition, Meta ads & agency system.</p>
+    <div class="price">₹499</div>
+
+    <div class="payment-box">
+        <p><b>UPI:</b> 8600883608@axl</p>
+        <p><b>Email:</b> swastikmedia87@gmail.com</p>
     </div>
 
-    <div class="phone">
-      <div class="reel-progress"><i id="progressBar"></i></div>
-      <div class="reel-tag" id="reelTag">GROWTH HOOKS</div>
-      <div class="reel-body"><div class="reel-hook" id="reelHook">Stop posting like this.</div></div>
-      <div class="reel-meta"><span class="views" id="reelViews">▲ 12.4K</span><span>0:0<span id="reelSec">3</span></span></div>
-    </div>
-  </section>
+    <button class="btn" onclick="paid('smma')">I Have Paid</button>
+
+    <a id="smma" href="smma.pdf#toolbar=0" target="_blank" class="btn hidden">
+        Access Course
+    </a>
 </div>
 
-<section>
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">Sound familiar?</div>
-      <h2>You're creating. It's just not converting.</h2>
+<!-- AI COPY -->
+<div class="course-card">
+    <h2>AI Copywriting System</h2>
+    <p>Write ads, emails & sell with AI.</p>
+    <div class="price">₹399</div>
+
+    <div class="payment-box">
+        <p><b>UPI:</b> 8600883608@axl</p>
+        <p><b>Email:</b> swastikmedia87@gmail.com</p>
     </div>
-    <div class="pain-grid">
-      <div class="pain-card"><div class="x">✕ Views stall out</div><p>You post consistently, but your Reels flatline under a few hundred views with no clear reason why.</p></div>
-      <div class="pain-card"><div class="x">✕ No content system</div><p>Every caption and hook is a blank page again — no repeatable formula to fall back on.</p></div>
-      <div class="pain-card"><div class="x">✕ Followers, not income</div><p>Your audience is growing, but you have no structured way to turn that reach into actual revenue.</p></div>
-    </div>
-  </div>
+
+    <button class="btn" onclick="paid('copy')">I Have Paid</button>
+
+    <a id="copy" href="ai-copywriting.pdf#toolbar=0" target="_blank" class="btn hidden">
+        Access Course
+    </a>
+</div>
+
 </section>
 
-<section id="inside">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">What's inside</div>
-      <h2>Two playbooks, merged into one system</h2>
-      <p class="sec-desc">Everything you need from your first hook to your first sale.</p>
-    </div>
-    <div class="feature-grid">
-      <div class="feature-card">
-        <div class="feature-num">01 / HOOKS</div>
-        <h3>100 Viral Hooks</h3>
-        <p>Categorized opening lines proven to stop the scroll, organized by intent.</p>
-        <ul>
-          <li>10 categories: Growth, Curiosity, Money, CTA &amp; more</li>
-          <li>Ready to paste into your next Reel</li>
-          <li>Paired with problem-solution formulas</li>
-        </ul>
-      </div>
-      <div class="feature-card">
-        <div class="feature-num">02 / IDEAS</div>
-        <h3>35 Reel Concepts</h3>
-        <p>Plug-and-play content ideas already matched to a high-converting hook.</p>
-        <ul>
-          <li>No more blank-page content days</li>
-          <li>Each idea mapped to an opening line</li>
-          <li>Covers growth, myths, BTS &amp; offers</li>
-        </ul>
-      </div>
-      <div class="feature-card">
-        <div class="feature-num">03 / BLUEPRINT</div>
-        <h3>Growth &amp; Monetization System</h3>
-        <p>The structural playbook behind the hooks — profile, content, SEO, analytics, income.</p>
-        <ul>
-          <li>70-20-10 content rule &amp; posting calendar</li>
-          <li>3-tier hashtag &amp; SEO checklist</li>
-          <li>6 monetization streams, mapped by earning potential</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">Creators are using it</div>
-      <h2>Built for people actually posting Reels</h2>
-    </div>
-    <div class="test-grid">
-      <div class="test-card">
-        <div class="stars">★★★★★</div>
-        <p class="test-quote">I stopped guessing my opening line. Picked a hook category, matched it to a Reel idea, and posted the same day.</p>
-        <div class="test-name">@ananya.creates</div>
-      </div>
-      <div class="test-card">
-        <div class="stars">★★★★★</div>
-        <p class="test-quote">The 70-20-10 split finally gave my feed structure. I know exactly what to post every day of the week now.</p>
-        <div class="test-name">@growthwithrahul</div>
-      </div>
-      <div class="test-card">
-        <div class="stars">★★★★★</div>
-        <p class="test-quote">The monetization chapter alone was worth it — I had no idea how many income streams I was leaving on the table.</p>
-        <div class="test-name">@thecontentdesk</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="pricing">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">Pricing</div>
-      <h2>Get instant access</h2>
-      <p class="sec-desc">One-time payment. Instant PDF download. Yours forever.</p>
-    </div>
-    <div class="price-grid">
-      <div class="price-card">
-        <h3>Hook Pack</h3>
-        <div class="desc">The 100 hooks &amp; 35 Reel ideas.</div>
-        <div class="price-amount">₹49</div>
-        <div class="price-note">One-time payment</div>
-        <ul>
-          <li>100 categorized viral hooks</li>
-          <li>35 matched Reel ideas</li>
-          <li>Problem-solution formula guide</li>
-        </ul>
-        <a href="#" class="btn btn-ghost btn-block">Get the Hook Pack</a>
-      </div>
-      <div class="price-card featured">
-        <div class="featured-tag">Best Value</div>
-        <h3>Complete Bundle</h3>
-        <div class="desc">Hooks + Reel ideas + full growth blueprint.</div>
-        <div class="price-amount"><span class="strike">₹199</span>₹99</div>
-        <div class="price-note">One-time payment · Save 50%</div>
-        <ul>
-          <li>Everything in the Hook Pack</li>
-          <li>Full Growth &amp; Monetization Blueprint</li>
-          <li>Hashtag, SEO &amp; analytics checklists</li>
-          <li>6 monetization streams breakdown</li>
-        </ul>
-        <a href="#" class="btn btn-primary btn-block">Get the Complete Bundle</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="guarantee">
-      <div class="badge-circle">7 DAY</div>
-      <p><strong>7-day money-back guarantee.</strong> If the hooks don't help your Reels perform better, email us within 7 days for a full refund — no questions asked.</p>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">FAQ</div>
-      <h2>Before you go</h2>
-    </div>
-    <div class="faq">
-      <details class="faq-item" open>
-        <summary>What format do I get the guide in?</summary>
-        <p>Both guides are delivered as downloadable PDFs, ready to reference from your phone or desktop.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Is this only for beginners?</summary>
-        <p>No — the hook library and monetization blueprint are structured so both new and established creators can find something to apply immediately.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Do the hooks work for niches outside of general content?</summary>
-        <p>The hooks are intent-based (curiosity, money, challenge, etc.) rather than niche-specific, so you adapt the wording to your own topic.</p>
-      </details>
-      <details class="faq-item">
-        <summary>What if I'm not happy with it?</summary>
-        <p>You're covered by the 7-day money-back guarantee — just reach out and we'll refund you in full.</p>
-      </details>
-    </div>
-  </div>
-</section>
-
-<section class="final-cta">
-  <div class="wrap">
-    <h2>Stop guessing your next hook.</h2>
-    <p class="sec-desc" style="margin-bottom:26px;">100 hooks. 35 ideas. One system. ₹99 today.</p>
-    <a href="#pricing" class="btn btn-primary">Get the Complete Bundle</a>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <span>Hook Lab — merged from the Viral Content Playbook &amp; Instagram Growth Blueprint</span>
-    <span>Growth comes from consistency, not perfection.</span>
-  </div>
+<footer style="text-align:center;margin-top:60px;color:#777;">
+© 2026 Swastik Media
 </footer>
 
-<script>
-  const hooks = [
-    ["Growth","Stop posting like this."],["Growth","This is why you're stuck at 300 views."],
-    ["Curiosity","Watch this before you post."],["Curiosity","You won't believe this."],
-    ["Beginner","Start here."],["Beginner","Your first 1,000 followers start here."],
-    ["Money","This made me money."],["Money","Turn followers into customers."],
-    ["Challenge","Try this for 7 days."],["CTA","Save this before you forget."]
-  ];
-  let i = 0;
-  const reelHookEl = document.getElementById('reelHook');
-  const reelTagEl = document.getElementById('reelTag');
-  const reelViewsEl = document.getElementById('reelViews');
-  const reelSecEl = document.getElementById('reelSec');
-  const progressBar = document.getElementById('progressBar');
-
-  function cycleReel(){
-    const h = hooks[i % hooks.length];
-    reelHookEl.textContent = `"${h[1]}"`;
-    reelTagEl.textContent = h[0].toUpperCase() + " HOOKS";
-    reelViewsEl.textContent = "▲ " + (Math.floor(Math.random()*80)+5) + "." + Math.floor(Math.random()*9) + "K";
-    i++;
-    progressBar.style.animation = 'none';
-    void progressBar.offsetWidth;
-    progressBar.style.animation = 'fillbar 3s linear infinite';
-  }
-  cycleReel();
-  setInterval(cycleReel, 3000);
-
-  let sec = 3;
-  setInterval(() => { sec = sec === 0 ? 3 : sec - 1; reelSecEl.textContent = sec; }, 1000);
-</script>
+</div>
 
 </body>
 </html>
